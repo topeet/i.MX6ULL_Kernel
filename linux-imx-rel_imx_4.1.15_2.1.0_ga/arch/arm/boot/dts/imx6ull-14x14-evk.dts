@@ -60,7 +60,7 @@
 			regulator-name = "can-3v3";
 			regulator-min-microvolt = <3300000>;
 			regulator-max-microvolt = <3300000>;
-			gpios = <&gpio_spi 3 GPIO_ACTIVE_LOW>;
+			/*gpios = <&gpio_spi 3 GPIO_ACTIVE_LOW>;*/
 		};
 
 		reg_sd1_vmmc: regulator@1 {
@@ -165,6 +165,7 @@
 			"CPU-Capture", "Capture";
 	};
 
+/*
 	spi4 {
 		compatible = "spi-gpio";
 		pinctrl-names = "default";
@@ -188,6 +189,31 @@
 			spi-max-frequency = <100000>;
 		};
 	};
+*/
+	spi4 {
+                compatible = "spi-gpio";
+                pinctrl-names = "default";
+                pinctrl-0 = <&pinctrl_spi4>;
+
+                status = "okay";
+                gpio-sck = <&gpio5 11 0>;
+                gpio-mosi = <&gpio5 10 0>;
+                gpio-miso = <&gpio3 7 0>;
+                cs-gpios = <&gpio3 22 0>;
+                num-chipselects = <1>;
+                #address-cells = <1>;
+                #size-cells = <0>;
+
+                rc522: rc522@0 {
+                        compatible = "rc522";
+                        gpio-controller;
+                        spi-tx-bus-width = <4>;
+                        spi-rx-bus-width = <4>;
+                        reset-rc522 = <&gpio3 5 0>;
+                        reg = <0>;
+                        spi-max-frequency = <4000000>;
+                };
+        };
 
 	sii902x_reset: sii902x-reset {
 		compatible = "gpio-reset";
@@ -543,9 +569,9 @@
 
 		pinctrl_lcdif_dat: lcdifdatgrp {
 			fsl,pins = <
-				MX6UL_PAD_LCD_DATA00__LCDIF_DATA00  0x79
+				/*MX6UL_PAD_LCD_DATA00__LCDIF_DATA00  0x79*/
 				MX6UL_PAD_LCD_DATA01__LCDIF_DATA01  0x79
-				MX6UL_PAD_LCD_DATA02__LCDIF_DATA02  0x79
+				/*MX6UL_PAD_LCD_DATA02__LCDIF_DATA02  0x79*/
 				MX6UL_PAD_LCD_DATA03__LCDIF_DATA03  0x79
 				MX6UL_PAD_LCD_DATA04__LCDIF_DATA04  0x79
 				MX6UL_PAD_LCD_DATA05__LCDIF_DATA05  0x79
@@ -560,7 +586,7 @@
 				MX6UL_PAD_LCD_DATA14__LCDIF_DATA14  0x79
 				MX6UL_PAD_LCD_DATA15__LCDIF_DATA15  0x79
 				/*MX6UL_PAD_LCD_DATA16__LCDIF_DATA16  0x79*/
-				MX6UL_PAD_LCD_DATA17__LCDIF_DATA17  0x79
+				/*MX6UL_PAD_LCD_DATA17__LCDIF_DATA17  0x79*/
 				MX6UL_PAD_LCD_DATA18__LCDIF_DATA18  0x79
 				MX6UL_PAD_LCD_DATA19__LCDIF_DATA19  0x79
 				MX6UL_PAD_LCD_DATA20__LCDIF_DATA20  0x79
@@ -609,7 +635,7 @@
 
 		pinctrl_sii902x: hdmigrp-1 {
                         fsl,pins = <
-				MX6ULL_PAD_SNVS_TAMPER3__GPIO5_IO03      0x11
+				MX6ULL_PAD_SNVS_TAMPER3__GPIO5_IO03      0x17059	/*0x11*/
                         >;
                 };
 
@@ -815,10 +841,11 @@
 
 		pinctrl_spi4: spi4grp {
                         fsl,pins = <
-                                MX6ULL_PAD_BOOT_MODE0__GPIO5_IO10        0x70a1
-                                MX6ULL_PAD_BOOT_MODE1__GPIO5_IO11        0x70a1
-                                MX6ULL_PAD_SNVS_TAMPER7__GPIO5_IO07      0x70a1
-                                MX6ULL_PAD_SNVS_TAMPER8__GPIO5_IO08      0x80000000
+                                MX6ULL_PAD_BOOT_MODE0__GPIO5_IO10        0x70a1		/*MOSI*/
+                                MX6ULL_PAD_BOOT_MODE1__GPIO5_IO11        0x70a1		/*SCK*/
+				MX6UL_PAD_LCD_DATA17__GPIO3_IO22  	0x17059		/*CS*/
+				MX6UL_PAD_LCD_DATA02__GPIO3_IO07        0x70a1		/*MISO*/
+				MX6UL_PAD_LCD_DATA00__GPIO3_IO05         0x17059	/* rc522 reset*/
                         >;
                 };
 

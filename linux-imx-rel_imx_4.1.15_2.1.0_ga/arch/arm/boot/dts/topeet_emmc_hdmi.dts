@@ -2,7 +2,7 @@
 
 / {
        sii902x_reset: sii902x-reset {
-                status = "disable";
+                status = "okay";
         };
 };
 

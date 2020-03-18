@@ -145,7 +145,7 @@ int inv_mpu6050_probe_trigger(struct iio_dev *indio_dev)
 	if (ret)
 		return ret;
 
-	printk("********************* fun:%s, line = %d\n", __FUNCTION__, __LINE__);
+	//printk("********************* fun:%s, line = %d\n", __FUNCTION__, __LINE__);
 	indio_dev->trig = iio_trigger_get(st->trig);
 
 	return 0;
