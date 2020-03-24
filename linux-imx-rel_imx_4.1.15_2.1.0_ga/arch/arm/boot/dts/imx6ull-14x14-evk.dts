@@ -143,7 +143,7 @@
 		 * hp-det-polarity = 0: hp detect high for headphone
 		 * hp-det-polarity = 1: hp detect high for speaker
 		 */
-		hp-det = <3 0>;
+		hp-det = <3 1>;
 		/* hp-det-gpios = <&gpio5 4 0>;
 		mic-det-gpios = <&gpio5 4 0>; */
 		audio-routing =
@@ -630,6 +630,7 @@
 				MX6UL_PAD_JTAG_TRST_B__SAI2_TX_DATA	0x11088
 				MX6UL_PAD_JTAG_TCK__SAI2_RX_DATA	0x11088
 				MX6UL_PAD_JTAG_TMS__SAI2_MCLK		0x17088
+				MX6UL_PAD_SNVS_TAMPER4__GPIO5_IO04      0x17059
 			>;
 		};
 
@@ -945,8 +946,7 @@
 
 &sai2 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_sai2
-		     &pinctrl_sai2_hp_det_b>;
+	pinctrl-0 = <&pinctrl_sai2>;
 
 	assigned-clocks = <&clks IMX6UL_CLK_SAI2_SEL>,
 			  <&clks IMX6UL_CLK_SAI2>;
