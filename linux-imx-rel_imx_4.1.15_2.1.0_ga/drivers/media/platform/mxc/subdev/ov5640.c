@@ -1157,7 +1157,7 @@ static int ov5640_init_mode(void)
 	/* change driver capability to 2x according to validation board.
 	 * if the image is not stable, please increase the driver strength.
 	 */
-	ov5640_driver_capability(2);
+	ov5640_driver_capability(1);
 	ov5640_set_bandingfilter();
 	ov5640_set_AE_target(AE_Target);
 	ov5640_set_night_mode(night_mode);
