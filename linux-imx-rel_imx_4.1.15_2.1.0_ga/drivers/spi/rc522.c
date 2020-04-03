@@ -726,7 +726,7 @@ static int rc522_probe(struct spi_device *spi)
 	int 			ret;
 	uint32_t 		value;
 	uint8_t			txdata,rxdata;
-//add by lsb 20190612
+
 	RESET_RC522 = of_get_named_gpio(spi->dev.of_node, "reset-rc522", 0);
         if (RESET_RC522 < 0) {
                 dev_err(&spi->dev, "error rc522 reset gpio: %d\n", RESET_RC522);
@@ -737,13 +737,15 @@ static int rc522_probe(struct spi_device *spi)
                 printk("error rc522 reset gpio: %d\n", ret);
                 return ret;
         }
-	gpio_free(RESET_RC522);
+
 	gpio_direction_output(RESET_RC522, 0);
         gpio_set_value(RESET_RC522, 0);
 
         mdelay(5);
         gpio_set_value(RESET_RC522, 1);
-//end add
+
+	gpio_free(RESET_RC522);
+
 	/*
 	 * rc522 should never be referenced in DT without a specific
 	 * compatbile string, it is a Linux implementation thing
@@ -754,19 +756,19 @@ static int rc522_probe(struct spi_device *spi)
 		WARN_ON(spi->dev.of_node &&
 			!of_match_device(rc522_dt_ids, &spi->dev));
 	}
-	printk("spi mode = %4x.\n ",spi->mode);
+	//printk("spi mode = %4x.\n ",spi->mode);
 	/* Allocate driver data */
 	rc522 = kzalloc(sizeof(*rc522), GFP_KERNEL);
 	if (!rc522)
 		return -ENOMEM;
-	printk("spi mode = %4x.\n ",spi->mode);
+	//printk("spi mode = %4x.\n ",spi->mode);
 	/* Initialize the driver data */
 	rc522->spi = spi;
 	spin_lock_init(&rc522->spi_lock);
 	mutex_init(&rc522->buf_lock);
 
 	INIT_LIST_HEAD(&rc522->device_entry);
-	printk("spi mode = %4x.\n ",spi->mode);
+	//printk("spi mode = %4x.\n ",spi->mode);
 
 	/* If we can allocate a minor number, hook up this device.
 	 * Reusing minors is fine so long as udev or mdev is working.
@@ -796,7 +798,7 @@ static int rc522_probe(struct spi_device *spi)
 		spi_set_drvdata(spi, rc522);
 	else
 		kfree(rc522);
-    printk("rc522 ok!\n");
+    	//printk("rc522 ok!\n");
 	return status;
 }
 

@@ -632,6 +632,12 @@ config LITEON_AP3216C
 
           If unsure, it is safe to say Y.
 
+config RELAY_CTL
+        bool "Enable RELAY config"
+        default y
+        help
+          Enable RELAY config
+
 source "drivers/char/xillybus/Kconfig"
 
 source "drivers/char/imx_amp/Kconfig"

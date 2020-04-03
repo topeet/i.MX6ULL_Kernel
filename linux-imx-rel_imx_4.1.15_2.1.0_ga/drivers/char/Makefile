@@ -66,3 +66,5 @@ obj-$(CONFIG_LITEON_AP3216C)    += ap3216c.o
 obj-$(CONFIG_TILE_SROM)		+= tile-srom.o
 obj-$(CONFIG_XILLYBUS)		+= xillybus/
 obj-$(CONFIG_HAVE_IMX_AMP)      += imx_amp/
+
+obj-$(CONFIG_RELAY_CTL)        += itop6x_relay.o
