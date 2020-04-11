@@ -19,6 +19,8 @@ make imx_v7_defconfig
 
 make uImage LOADADDR=0x10008000 -j8
 
+make modules
+
 make topeet_emmc_4_3.dtb
 make topeet_emmc_5_0.dtb
 make topeet_emmc_7_0.dtb
