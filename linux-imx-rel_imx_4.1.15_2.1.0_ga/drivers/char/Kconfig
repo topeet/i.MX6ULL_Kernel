@@ -638,6 +638,12 @@ config RELAY_CTL
         help
           Enable RELAY config
 
+config STEP_MOTOR_CTL
+        bool "Enable STEP_MOTOR config"
+        default y
+        help
+          Enable STEP_MOTOR config
+
 source "drivers/char/xillybus/Kconfig"
 
 source "drivers/char/imx_amp/Kconfig"
