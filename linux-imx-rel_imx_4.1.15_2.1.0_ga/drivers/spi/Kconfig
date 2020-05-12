@@ -667,6 +667,12 @@ config SPI_RC522
 	help
 	  This supports RC522 Module drivers.
 
+config SPI_SX127X
+        tristate "SX127X Module driver support"
+        depends on SPI_MASTER && OF
+        help
+          This supports SX127X Module drivers.
+
 #
 # Add new SPI protocol masters in alphabetical order above this line
 #

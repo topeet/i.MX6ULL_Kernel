@@ -1706,6 +1706,7 @@ CONFIG_SPI_IMX=y
 # CONFIG_SPI_SPIDEV is not set
 # CONFIG_SPI_TLE62X0 is not set
 CONFIG_SPI_RC522=y
+# CONFIG_SPI_SX127X is not set
 # CONFIG_SPMI is not set
 # CONFIG_HSI is not set
 
