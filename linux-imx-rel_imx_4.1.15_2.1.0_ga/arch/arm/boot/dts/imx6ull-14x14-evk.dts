@@ -471,7 +471,7 @@
                 pinctrl-names = "default";
                 pinctrl-0 = <&ts_int_pin>;
                 interrupt-parent = <&gpio1>;
-                interrupts = <9 0>;
+                interrupts = <9 2>;
                 gpios = <&gpio1 9 GPIO_ACTIVE_LOW>;
                 ti,x-plate-ohms = <660>;
                 status = "disabled";

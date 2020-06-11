@@ -332,6 +332,8 @@ static int tsc2007_probe_dt(struct i2c_client *client, struct tsc2007 *ts)
 			 "GPIO not specified in DT (of_get_gpio returned %d)\n",
 			 ts->gpio);
 
+        gpio_direction_input(ts->gpio);
+
 	return 0;
 }
 #else
