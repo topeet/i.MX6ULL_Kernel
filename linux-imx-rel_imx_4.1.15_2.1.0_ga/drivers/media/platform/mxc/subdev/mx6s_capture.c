@@ -1946,7 +1946,21 @@ static struct platform_driver mx6s_csi_driver = {
 	.remove	= mx6s_csi_remove,
 };
 
-module_platform_driver(mx6s_csi_driver);
+//module_platform_driver(mx6s_csi_driver);
+static int __init mx6s_csi_driver_init(void)
+{
+         return platform_driver_register(&mx6s_csi_driver);
+}
+
+//module_init(mx6s_csi_driver_init);
+late_initcall(mx6s_csi_driver_init);
+
+static void __exit mx6s_csi_driver_exit(void)
+{
+        return platform_driver_unregister(&mx6s_csi_driver);
+}
+
+module_exit(mx6s_csi_driver_exit);
 
 MODULE_DESCRIPTION("i.MX6Sx SoC Camera Host driver");
 MODULE_AUTHOR("Freescale Semiconductor, Inc.");

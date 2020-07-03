@@ -653,7 +653,7 @@ static void count_a2dp_packet_timeout(unsigned long data)
 
 static void count_pan_packet_timeout(unsigned long data)
 {
-	RTKBT_DBG("count pan packet timeout, pan_packet_count = %d", usb_coex_info.pan_packet_count);
+	//RTKBT_DBG("count pan packet timeout, pan_packet_count = %d", usb_coex_info.pan_packet_count);
 	if(usb_coex_info.pan_packet_count < PAN_PACKET_COUNT) {
 		if(is_profile_busy(profile_pan)) {
 			RTKBT_DBG("timeout_handler: pan busy->idle!");

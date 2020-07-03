@@ -41,8 +41,9 @@ struct pwm_bl_data {
 					int brightness);
 	int			(*check_fb)(struct device *, struct fb_info *);
 	void			(*exit)(struct device *);
-	char			fb_id[16];
 };
+
+struct backlight_device *bl_global = NULL;;
 
 static void pwm_backlight_power_on(struct pwm_bl_data *pb, int brightness)
 {
@@ -131,17 +132,6 @@ static const struct backlight_ops pwm_backlight_ops = {
 };
 
 #ifdef CONFIG_OF
-static int pwm_backlight_check_fb_name(struct device *dev, struct fb_info *info)
-{
-	struct backlight_device *bl = dev_get_drvdata(dev);
-	struct pwm_bl_data *pb = bl_get_data(bl);
-
-	if (strcmp(info->fix.id, pb->fb_id) == 0)
-		return true;
-
-	return false;
-}
-
 static int pwm_backlight_parse_dt(struct device *dev,
 				  struct platform_pwm_backlight_data *data)
 {
@@ -150,7 +140,6 @@ static int pwm_backlight_parse_dt(struct device *dev,
 	int length;
 	u32 value;
 	int ret;
-	const char *names;
 
 	if (!node)
 		return -ENODEV;
@@ -185,11 +174,6 @@ static int pwm_backlight_parse_dt(struct device *dev,
 
 		data->dft_brightness = value;
 		data->max_brightness--;
-	}
-
-	if (!of_property_read_string(node, "fb-names", &names)){
-		strcpy(data->fb_id, names);
-		data->check_fb = &pwm_backlight_check_fb_name;
 	}
 
 	data->enable_gpio = -EINVAL;
@@ -258,7 +242,6 @@ static int pwm_backlight_probe(struct platform_device *pdev)
 	pb->exit = data->exit;
 	pb->dev = &pdev->dev;
 	pb->enabled = false;
-	strcpy(pb->fb_id, data->fb_id);
 
 	pb->enable_gpio = devm_gpiod_get_optional(&pdev->dev, "enable");
 	if (IS_ERR(pb->enable_gpio)) {
@@ -342,7 +325,9 @@ static int pwm_backlight_probe(struct platform_device *pdev)
 	}
 
 	bl->props.brightness = data->dft_brightness;
-	backlight_update_status(bl);
+	//backlight_update_status(bl);
+
+	bl_global = bl;
 
 	platform_set_drvdata(pdev, bl);
 	return 0;
@@ -412,6 +397,20 @@ static const struct dev_pm_ops pwm_backlight_pm_ops = {
 	.restore = pwm_backlight_resume,
 #endif
 };
+
+void backlight_turn_on(void)
+{
+	if(!bl_global)
+	{
+		printk("************************ fun:%s, line = %d(bl_global is null)\n", __FUNCTION__, __LINE__);
+	}
+	else
+	{
+		printk("********************** fun:%s, line = %d **********************\n", __FUNCTION__, __LINE__);
+		backlight_update_status(bl_global);
+	}
+}
+EXPORT_SYMBOL(backlight_turn_on);
 
 static struct platform_driver pwm_backlight_driver = {
 	.driver		= {
